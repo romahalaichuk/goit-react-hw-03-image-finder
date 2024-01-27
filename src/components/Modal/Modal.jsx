@@ -1,32 +1,30 @@
-// Modal.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
-const Modal = ({ imageUrl, onClose }) => {
-  // Dodajemy obsługę zdarzeń klawiatury dla zamknięcia modala po naciśnięciu klawisza ESC
-  const handleKeyDown = event => {
-    if (event.key === 'Escape') {
-      onClose();
-    }
-  };
-
-  const handleClickOutside = event => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
+const Modal = ({ onClose, children }) => {
+  const handleKeyDown = useCallback(
+    event => {
+      if (event.code === 'Escape') {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+    const handleKeyPress = event => {
+      handleKeyDown(event);
     };
-  }, []);
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyDown, onClose]);
 
   return (
-    <div className="overlay" onClick={handleClickOutside}>
-      <div className="modal">
-        <img src={imageUrl} alt="" />
-      </div>
+    <div className="overlay" onClick={onClose}>
+      <div className="modal">{children}</div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Button = ({ onClick }) => {
   }, [handleKeyPress]);
 
   return (
-    <button type="button" onClick={onClick}>
+    <button className="button-load-more " type="button" onClick={onClick}>
       Click me
     </button>
   );

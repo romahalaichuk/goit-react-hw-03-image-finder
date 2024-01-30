@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
-const Button = ({ onClick }) => {
+const Button = ({ onClick, images }) => {
   const handleKeyPress = useCallback(
     event => {
       if (event.code === 'Enter') {
@@ -19,10 +20,19 @@ const Button = ({ onClick }) => {
   }, [handleKeyPress]);
 
   return (
-    <button className="button-load-more " type="button" onClick={onClick}>
-      Click me
-    </button>
+    <div>
+      {images.length > 0 && (
+        <button className="button-load-more " type="button" onClick={onClick}>
+          Click me
+        </button>
+      )}
+    </div>
   );
+};
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  images: PropTypes.array.isRequired,
 };
 
 export default Button;

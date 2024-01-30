@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 
-const ImageGalleryItem = ({ image }) => {
+const ImageGalleryItem = ({ image, onImageClick }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleToggleModal = () => {
-    setModalOpen(!isModalOpen);
-  };
-
-  const handleClickImage = e => {
-    e.stopPropagation();
-    handleToggleModal();
-  };
-
   return (
-    <li className="gallery-item" onClick={handleToggleModal}>
-      <img src={image.webformatURL} alt="" onClick={handleClickImage} />
-
+    <li
+      className="gallery-item"
+      onClick={() => onImageClick(image.largeImageURL)}
+    >
+      <img src={image.webformatURL} alt="" />
       {isModalOpen && (
-        <Modal onClose={handleToggleModal}>
+        <Modal onClose={() => setModalOpen(false)}>
           <img src={image.largeImageURL} alt="" />
         </Modal>
       )}
     </li>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.object.isRequired,
+  onImageClick: PropTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;

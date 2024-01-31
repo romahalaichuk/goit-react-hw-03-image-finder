@@ -59,12 +59,12 @@ const App = () => {
       <Searchbar onSubmit={handleSearch} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {loading && <Loader />}
-      {images.length > 0 && !loading && (
+      {images.length >= 12 && !loading && (
         <Button onClick={handleLoadMore} images={images} />
       )}
       {showModal && (
         <Modal onClose={handleCloseModal}>
-          <img src={modalImageUrl} alt="" />
+          <img src={modalImageUrl} alt="Modal Content" />
         </Modal>
       )}
     </div>

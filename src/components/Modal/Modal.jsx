@@ -1,4 +1,3 @@
-// Modal.jsx
 import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,21 +23,19 @@ const Modal = ({ onClose, children }) => {
     };
   }, [handleKeyDown, onClose]);
 
-  const modalContent = React.Children.only(children);
-
   return (
     <div
       className="overlay"
       onClick={e => e.target.classList.contains('overlay') && onClose()}
     >
-      <div className="modal">{modalContent}</div>
+      <div className="modal">{children}</div>
     </div>
   );
 };
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Modal;
